@@ -15,7 +15,7 @@ SearchServer::SearchServer(const string& stop_words_text)
 {
 }
 
-std::vector<int>::const_iterator SearchServer::begin() const { //std::vector<int>::const_iterator
+std::vector<int>::const_iterator SearchServer::begin() const {
     return document_ids_.begin();
 }
 std::vector<int>::const_iterator SearchServer::end() const {
@@ -104,7 +104,7 @@ void SearchServer::RemoveDocument(int document_id) {
     freqs_words_in_document_.erase(document_id);
 }
 
-                                   /* Определения приватных методов*/
+                                   /* Definitions of private methods */
 
 bool SearchServer::IsStopWord(const string& word) const {
     return stop_words_.count(word) > 0;
