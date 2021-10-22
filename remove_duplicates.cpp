@@ -6,9 +6,9 @@
 #include <set>
 #include <map>
 
-using std::map;
 using std::cout;
 using std::endl;
+using std::map;
 using std::set;
 using std::string;
 
