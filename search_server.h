@@ -24,9 +24,9 @@ public:
 
     explicit SearchServer(const std::string& stop_words_text);
 
-    std::vector<int>::const_iterator begin() const;
+    std::set<int>::const_iterator begin() const;
 
-    std::vector<int>::const_iterator end() const;
+    std::set<int>::const_iterator end() const;
 
     void AddDocument(int document_id, const std::string& document, 
                      DocumentStatus status, const std::vector<int>& ratings);
@@ -55,11 +55,11 @@ private:
         int rating;
         DocumentStatus status;
     };
+
     const std::set<std::string> stop_words_;
     std::map<std::string, std::map<int, double>> word_to_document_freqs_;
     std::map<int, DocumentData> documents_;
-    std::vector<int> document_ids_;
-    // В данном задании добавил два словаря (инициализирую их в AddDocument):
+    std::set<int> document_ids_;
     std::map<int, std::map<std::string, double>> freqs_words_in_document_;
     std::map<int, std::set<std::string>> document_words_;
 
