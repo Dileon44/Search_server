@@ -1,5 +1,6 @@
 #include "remove_duplicates.h"
 
+#include "search_server.h"
 #include <iostream>
 #include <string>
 #include <set>
