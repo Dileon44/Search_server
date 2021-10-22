@@ -15,10 +15,10 @@ SearchServer::SearchServer(const string& stop_words_text)
 {
 }
 
-std::vector<int>::const_iterator SearchServer::begin() const {
+std::set<int>::const_iterator SearchServer::begin() const {
     return document_ids_.begin();
 }
-std::vector<int>::const_iterator SearchServer::end() const {
+std::set<int>::const_iterator SearchServer::end() const {
     return document_ids_.end();
 }
 
@@ -35,7 +35,7 @@ void SearchServer::AddDocument(int document_id, const string& document, Document
         document_words_[document_id].insert(word);
     }
     documents_.emplace(document_id, DocumentData{ ComputeAverageRating(ratings), status });
-    document_ids_.push_back(document_id);
+    document_ids_.insert(document_id);
 }
 
 vector<Document> SearchServer::FindTopDocuments(const string& raw_query, DocumentStatus status) const {
@@ -77,7 +77,7 @@ tuple<vector<string>, DocumentStatus> SearchServer::MatchDocument(const string& 
 }
 
 const map<string, double> SearchServer::GetFrequenciesWords(int document_id) const {
-    if (freqs_words_in_document_.count(document_id) == 0) {
+    if (document_ids_.count(document_id) == 0) {
         map<string, double> document_empty;
         return document_empty;
     }
@@ -89,13 +89,12 @@ std::map<int, std::set<std::string>> SearchServer::GetDocuments() const {
 }
 
 void SearchServer::RemoveDocument(int document_id) {
-    if (!freqs_words_in_document_.count(document_id)) {
+    if (!document_ids_.count(document_id)) {
         return;
     }
     documents_.erase(document_id);
 
-    auto ptr_on_document = lower_bound(document_ids_.begin(), document_ids_.end(), document_id);
-    document_ids_.erase(ptr_on_document);
+    document_ids_.erase(document_ids_.find(document_id));
 
     for (const auto& [word, _] : freqs_words_in_document_.at(document_id)) {
         word_to_document_freqs_.erase(word);
@@ -104,7 +103,7 @@ void SearchServer::RemoveDocument(int document_id) {
     freqs_words_in_document_.erase(document_id);
 }
 
-                                   /* Definitions of private methods */
+                                   /* Определения приватных методов*/
 
 bool SearchServer::IsStopWord(const string& word) const {
     return stop_words_.count(word) > 0;
