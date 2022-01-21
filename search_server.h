@@ -1,14 +1,15 @@
 #pragma once
 
 #include <string>
-#include "string_processing.h"
 #include <algorithm>
 #include <utility>
-#include "document.h"
 #include <stdexcept>
 #include <map>
 #include <set>
 #include <vector>
+
+#include "string_processing.h"
+#include "document.h"
 
 using namespace std::string_literals;
 
@@ -44,7 +45,7 @@ public:
     std::tuple<std::vector<std::string>, DocumentStatus> MatchDocument(const std::string& raw_query,
                                                                        int document_id) const;
 
-    const std::map<std::string, double> GetFrequenciesWords(int document_id) const;
+    const std::map<std::string, double> GetWordFrequencies(int document_id) const;
 
     std::map<int, std::set<std::string>> GetDocuments() const;
 
