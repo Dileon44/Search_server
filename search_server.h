@@ -45,7 +45,7 @@ public:
     std::tuple<std::vector<std::string>, DocumentStatus> MatchDocument(const std::string& raw_query,
                                                                        int document_id) const;
 
-    const std::map<std::string, double> GetWordFrequencies(int document_id) const;
+    const std::map<std::string, double>& GetWordFrequencies(int document_id) const;
 
     std::map<int, std::set<std::string>> GetDocuments() const;
 
