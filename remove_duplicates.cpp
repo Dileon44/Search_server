@@ -13,16 +13,25 @@ using std::set;
 using std::string;
 
 void RemoveDuplicates(SearchServer& search_server) {
-    const map<int, set<string>> documents = search_server.GetDocuments();
+    set<set<string>> documents_inverting;
+    set<int> duplicates;
 
-    map<set<string>, int> documents_inverting;
-    for (const auto& [id, words] : documents) { // 1. инициализация обратного словаря
+    for (const int& id : search_server) {
+        set<string> words;
+        for (const auto [word, _] : search_server.GetWordFrequencies(id)) {
+            words.insert(word);
+        }
+
         if (documents_inverting.count(words)) {
-            cout << "Found duplicate document id " << id << endl;
-            search_server.RemoveDocument(id);
+            duplicates.insert(id);
         }
         else {
-            documents_inverting[words] = id;
+            documents_inverting.insert(words);
         }
+    }
+
+    for (const int& id : duplicates) {
+        cout << "Found duplicate document id " << id << endl;
+        search_server.RemoveDocument(id);
     }
 }
