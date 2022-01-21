@@ -47,8 +47,6 @@ public:
 
     const std::map<std::string, double>& GetWordFrequencies(int document_id) const;
 
-    std::map<int, std::set<std::string>> GetDocuments() const;
-
     void RemoveDocument(int document_id);
     
 private:
@@ -62,7 +60,6 @@ private:
     std::map<int, DocumentData> documents_;
     std::set<int> document_ids_;
     std::map<int, std::map<std::string, double>> freqs_words_in_document_;
-    std::map<int, std::set<std::string>> document_words_;
 
     bool IsStopWord(const std::string& word) const;
 
