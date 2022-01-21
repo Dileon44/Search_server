@@ -76,7 +76,7 @@ tuple<vector<string>, DocumentStatus> SearchServer::MatchDocument(const string& 
     return { matched_words, documents_.at(document_id).status };
 }
 
-const map<string, double> SearchServer::GetFrequenciesWords(int document_id) const {
+const map<string, double> SearchServer::GetWordFrequencies(int document_id) const {
     if (document_ids_.count(document_id) == 0) {
         map<string, double> document_empty;
         return document_empty;
@@ -84,9 +84,6 @@ const map<string, double> SearchServer::GetFrequenciesWords(int document_id) con
     return freqs_words_in_document_.at(document_id);
 }
 
-std::map<int, std::set<std::string>> SearchServer::GetDocuments() const {
-    return document_words_;
-}
 
 void SearchServer::RemoveDocument(int document_id) {
     if (!document_ids_.count(document_id)) {
